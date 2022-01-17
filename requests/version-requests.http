@@ -1,0 +1,19 @@
+### Valid versions
+GET http://localhost:8080/api/v1/version/compare/1.0.3/1.2.1
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.body === -1, "Response assertion error");
+});
+%}
+
+### Invalid versions
+GET http://localhost:8080/api/v1/version/compare/1.0.3-SNAPSHOT/1.2.1
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 400, "Response status is not 400");
+  client.assert(response.body.message === "Version format is wrong", "Response error message assertion error");
+});
+%}
